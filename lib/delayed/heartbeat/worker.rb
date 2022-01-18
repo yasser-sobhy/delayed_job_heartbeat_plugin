@@ -4,7 +4,12 @@ require 'delayed/heartbeat/compatibility'
 
 module Delayed
   module Heartbeat
-    class Worker < ActiveRecord::Base
+
+    class JobRecord < ::ActiveRecord::Base
+      self.abstract_class = true
+    end  
+
+    class Worker < JobRecord
       self.table_name = 'delayed_workers'
 
       if Delayed::Heartbeat::Compatibility.mass_assignment_security_enabled?
